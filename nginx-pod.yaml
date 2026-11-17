@@ -14,7 +14,7 @@ spec:
       restartPolicy: Always
       env:
         - name: SCRIPT_URL
-          value: "https://raw.githubusercontent.com/<GH_USER>/<GH_REPO>/main/frontend.py"
+          value: "https://raw.githubusercontent.com/giacomo270197/K8Session/refs/heads/main/frontend.py"
         - name: BACKEND_URL
           value: "http://<REDIS_POD_IP>:1337"   # get it with: kubectl get pod redis -o wide
       command: ["sh", "-c"]
