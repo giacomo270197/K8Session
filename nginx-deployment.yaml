@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx              # which Pods this Deployment owns (immutable after creation)
+  template:                   # Pod template: same spec as nginx-pod.yaml
+    metadata:
+      labels:
+        app: nginx            # must match spec.selector AND the Service selector
+        tier: frontend
+    spec:
+      containers:
+        # Native sidecar (restartPolicy: Always): starts before the main container
+        # and keeps running for the pod's lifetime. Requires Kubernetes >= 1.29.
+        - name: nginx
+          image: python:3.13-slim
+          restartPolicy: Always
+          env:
+            - name: SCRIPT_URL
+              value: "https://raw.githubusercontent.com/giacomo270197/K8Session/refs/heads/main/frontend.py"
+          command: ["sh", "-c"]
+          args:
+            - |
+              python -c "import os, urllib.request; urllib.request.urlretrieve(os.environ['SCRIPT_URL'], '/tmp/server.py')" \
+              && exec python -u /tmp/server.py
