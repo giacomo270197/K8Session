@@ -6,7 +6,7 @@ metadata:
     app: redis
     tier: backend
 spec:
-  initContainers:
+  containers:
     # Native sidecar (restartPolicy: Always): starts before the main container
     # and keeps running for the pod's lifetime. Requires Kubernetes >= 1.29.
     - name: redis
