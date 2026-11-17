@@ -15,5 +15,5 @@ spec:
   ports:
     - name: http
       port: 1337          
-      nodePort: 80     
+      nodePort: 31337     
       protocol: TCP
