@@ -10,13 +10,11 @@ spec:
     # Native sidecar (restartPolicy: Always): starts before the main container
     # and keeps running for the pod's lifetime. Requires Kubernetes >= 1.29.
     - name: nginx
-      image: nginx:stable
+      image: python:3.13-slim
       restartPolicy: Always
       env:
         - name: SCRIPT_URL
           value: "https://raw.githubusercontent.com/giacomo270197/K8Session/refs/heads/main/frontend.py"
-        - name: BACKEND_URL
-          value: "http://<REDIS_POD_IP>:1337"   # get it with: kubectl get pod redis -o wide
       command: ["sh", "-c"]
       args:
         - |
