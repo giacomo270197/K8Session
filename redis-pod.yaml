@@ -10,7 +10,7 @@ spec:
     # Native sidecar (restartPolicy: Always): starts before the main container
     # and keeps running for the pod's lifetime. Requires Kubernetes >= 1.29.
     - name: redis
-      image: redis:8
+      image: python:3.13-slim
       restartPolicy: Always
       env:
         - name: SCRIPT_URL
