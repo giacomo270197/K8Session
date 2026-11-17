@@ -14,7 +14,7 @@ spec:
       restartPolicy: Always
       env:
         - name: SCRIPT_URL
-          value: "https://raw.githubusercontent.com/<GH_USER>/<GH_REPO>/main/backend.py"
+          value: "https://raw.githubusercontent.com/giacomo270197/K8Session/refs/heads/main/backend.py"
       command: ["sh", "-c"]
       args:
         - |
