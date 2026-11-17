@@ -11,7 +11,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 1337
 HOSTNAME = socket.gethostname()
-BACKEND_URL = "http://10.244.2.4:1337"
+BACKEND_URL = "http://redis.default.svc.cluster.local:1337"
 
 
 class Handler(BaseHTTPRequestHandler):
