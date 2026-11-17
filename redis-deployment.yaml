@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+    tier: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis              # which Pods this Deployment owns (immutable after creation)
+  template:                   # Pod template: same spec as redis-pod.yaml
+    metadata:
+      labels:
+        app: redis            # must match spec.selector AND the Service selector
+        tier: backend
+    spec:
+      containers:
+        # Native sidecar (restartPolicy: Always): starts before the main container
+        # and keeps running for the pod's lifetime. Requires Kubernetes >= 1.29.
+        - name: redis
+          image: python:3.13-slim
+          restartPolicy: Always
+          env:
+            - name: SCRIPT_URL
+              value: "https://raw.githubusercontent.com/giacomo270197/K8Session/refs/heads/main/backend.py"
+          command: ["sh", "-c"]
+          args:
+            - |
+              python -c "import os, urllib.request; urllib.request.urlretrieve(os.environ['SCRIPT_URL'], '/tmp/server.py')" \
+              && exec python -u /tmp/server.py
