@@ -11,7 +11,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 1337
 HOSTNAME = socket.gethostname()
-BACKEND_URL = "http://192.168.1.166:1337"
+BACKEND_URL = "http://10.102.40.177:1337"
 
 
 class Handler(BaseHTTPRequestHandler):
