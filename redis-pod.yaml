@@ -19,7 +19,7 @@ spec:
           name: audit
           readOnly: true
   volumes:
-    - name: frontend
+    - name: backend
       hostPath:
         path: /root/backend.py
         type: File
