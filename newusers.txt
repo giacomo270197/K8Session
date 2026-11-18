@@ -2,3 +2,35 @@ openssl genrsa -out bob.key 2048
 openssl genrsa -out alice.key 2048
 openssl req -new -key bob.key -out bob.csr -subj "/CN=bob"
 openssl req -new -key alice.key -out bob.csr -subj "/CN=alice"
+
+## For Bob
+---------------------------------------------------
+cat <<EOF | kubectl apply -f -
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: bob
+spec:
+  request: $(base64 -w0 bob.csr)
+  signerName: kubernetes.io/kube-apiserver-client  
+  expirationSeconds: 86400                         
+  usages:
+    - client auth
+EOF
+
+kubectl config set-credentials bob --client-certificate=bob.crt --client-key=bob.key --embed-certs=true
+kubectl config set-context bob@kubernetes --cluster=kubernetes --user=bob
+
+
+## For Alice
+---------------------------------------------------
+cat > alice.ext <<EOF
+basicConstraints = CA:FALSE
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth
+EOF
+
+openssl x509 -req -in alice.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out alice.crt -days 365 -sha256 -extfile alice.ext
+
+kubectl config set-credentials alice --client-certificate=alice.crt --client-key=alice.key --embed-certs=true
+kubectl config set-context alice@kubernetes --cluster=kubernetes --user=alice
