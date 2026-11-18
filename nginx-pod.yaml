@@ -11,10 +11,16 @@ spec:
       image: python:3.13-slim
       restartPolicy: Always
       env:
-        - name: SCRIPT_URL
-          value: "https://raw.githubusercontent.com/giacomo270197/K8Session/refs/heads/main/frontend.py"
       command: ["sh", "-c"]
       args:
         - |
-          python -c "import os, urllib.request; urllib.request.urlretrieve(os.environ['SCRIPT_URL'], '/tmp/server.py')" \
-          && exec python -u /tmp/server.py
+          exec python -u /tmp/server.py
+      volumeMounts:
+        - mountPath: /tmp/server.py
+          name: frontend
+          readOnly: true
+  volumes:
+    - name: backend
+      hostPath:
+        path: /root/frontend.py
+        type: File
