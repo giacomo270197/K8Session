@@ -7,8 +7,6 @@ metadata:
     tier: frontend
 spec:
   containers:
-    # Native sidecar (restartPolicy: Always): starts before the main container
-    # and keeps running for the pod's lifetime. Requires Kubernetes >= 1.29.
     - name: nginx
       image: python:3.13-slim
       restartPolicy: Always
