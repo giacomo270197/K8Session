@@ -20,7 +20,7 @@ spec:
           name: frontend
           readOnly: true
   volumes:
-    - name: backend
+    - name: frontend
       hostPath:
         path: /root/frontend.py
         type: File
