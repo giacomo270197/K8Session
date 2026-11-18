@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: users-read-workshop-secret
+  namespace: default
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: bob
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: alice 
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: read-workshop-secret
