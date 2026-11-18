@@ -1,6 +1,3 @@
-# NodePort Service: opens the same port on EVERY node's IP and forwards it to the
-# nginx Pods. It also gets a ClusterIP, so it works inside the cluster too.
-# nodePort must be in the cluster's NodePort range (default 30000-32767).
 apiVersion: v1
 kind: Service
 metadata:
