@@ -16,7 +16,7 @@ spec:
            exec python -u /tmp/server.py
       volumeMounts:
         - mountPath: /tmp/server.py
-          name: audit
+          name: backend
           readOnly: true
   volumes:
     - name: backend
