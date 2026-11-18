@@ -1,0 +1,4 @@
+openssl genrsa -out bob.key 2048
+openssl genrsa -out alice.key 2048
+openssl req -new -key bob.key -out bob.csr -subj "/CN=bob"
+openssl req -new -key alice.key -out bob.csr -subj "/CN=alice"
